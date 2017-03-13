@@ -44,30 +44,30 @@ def specifyTimeInterval(unit, number):
 
 print "\nNEURIO DATA"
 
-#- live consumption power for 30 seconds:
-# for x in range(30):
-#     sample = nc.get_samples_live_last(sensor_id=my_keys.sensor_id)
-#     print "   ", sample['consumptionPower']
-#     time.sleep(1)
+def queryPastHour():
+    timeinterval, frequency = specifyTimeInterval("hours", 1)
+    data = nc.get_samples(sensor_id=my_keys.sensor_id, start=timeinterval,
+        granularity="hours", frequency=1)
+    return data
 
 
-#print time for the past hour
-timeinterval, frequency = specifyTimeInterval("hours", 1)
-data = nc.get_samples(sensor_id=my_keys.sensor_id, start=timeinterval,
-        granularity="minutes", frequency=frequency)
-print "- comsumption power for the past hour:", data[0]['consumptionPower']
+def queryPastDay():
+    timeinterval, frequency = specifyTimeInterval("hours", 24)
+    data = nc.get_samples(sensor_id=my_keys.sensor_id, start=timeinterval,
+        granularity="hours", frequency=1)
+    return data
 
-#print time for the past two hours
-timeinterval, frequency = specifyTimeInterval("hours", 2)
-data = nc.get_samples(sensor_id=my_keys.sensor_id, start=timeinterval,
-        granularity="minutes", frequency=frequency)
-print "- comsumption power for the past two hours:", data[0]['consumptionPower']
 
-# #print time for the past day
-# timeinterval, frequency = specifyTimeInterval("hours", 24)
-# data = nc.get_samples(sensor_id=my_keys.sensor_id, start=timeinterval,
-#         granularity="minutes", frequency=frequency)
-# print "- comsumption power for the past day:", data[0]['consumptionPower']
+def queryPastWeek():
+    timeinterval, frequency = specifyTimeInterval("hours", 168)
+    data = nc.get_samples(sensor_id=my_keys.sensor_id, start=timeinterval,
+        granularity="hours", frequency=1)
+    return data
+
+
+print "data for the past hour:\n", queryPastHour()
+print "data for the past day:\n", queryPastDay()
+print "data for the past week:\n", queryPastMonth()
 
 
 
